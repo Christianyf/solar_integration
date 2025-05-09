@@ -1,0 +1,58 @@
+# Archivos de configuración de Node.js (Backend y Frontend)
+# ======================================================
+node_modules/
+solar_app/node_modules/
+solar_app/dist/
+solar_app/.angular/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.pnpm-error.log*
+.env
+.env.*
+.DS_Store # macOS specific files
+
+# Archivos de compilación y temporales (Frontend - Angular/Ionic)
+# ============================================================
+dist/ # Directorio de salida para la compilación de Angular
+coverage/ # Directorio para informes de cobertura de pruebas
+*.tsbuildinfo # Archivos generados por TypeScript para builds incrementales
+.angular/ # Archivos de caché y temporales de Angular CLI
+
+# Archivos específicos de Docker
+# =============================
+# Ignorar volúmenes de Docker
+# Esto es importante para no subir datos generados por Docker Compose o Docker.
+# Asegúrate de que si tienes volúmenes de datos específicos para MySQL,
+# no estén dentro de los directorios que vas a subir.
+# Por ejemplo, si tu `docker-compose.yml` monta un volumen en `./data/mysql`,
+# podrías querer ignorar ese directorio:
+# data/mysql/
+# O si es un volumen con nombre, no hay problema ya que no está en el sistema de archivos local.
+
+# Archivos de log de Docker (si se generan fuera de los contenedores y no son persistentes)
+*.log
+!nginx.log # Ejemplo: si tienes un log que SÍ quieres mantener para el control de versiones
+
+# Archivos de configuración de IDEs (si aplica)
+# ========================================
+.vscode/ # Visual Studio Code
+.idea/ # IntelliJ IDEA
+*.sublime-project
+*.sublime-workspace
+
+# Directorios de prueba (si generas algún artefacto de prueba fuera de `coverage`)
+# ===========================================================================
+# e2e/ # Si tienes un directorio e2e que genera archivos que no quieres trackear
+# screenshots/ # Si tus pruebas generan screenshots
+
+# Archivos de sistema
+# ===================
+.DS_Store
+Thumbs.db # Windows specific files
+
+# Archivos temporales del sistema operativo
+*~
+*.swp
+.bak

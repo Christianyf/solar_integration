@@ -1,0 +1,113 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button href="/login">
+        <ion-icon slot="icon-only" name="person"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Estado del sistema</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Gráfico de Irradiancia en las últimas 24 horas -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Irradiancia - Últimas 24h</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div style="width: 100%; height: 400px;">
+        <canvas id="irradiancia24hChart"></canvas>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Gráfico de Potencia en las últimas 24 horas -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Potencia - Últimas 24h</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div style="width: 100%; height: 400px;">
+        <canvas id="potencia24hChart"></canvas>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Gráficos de Temperaturas -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Temperaturas - Últimas 24h</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <div style="width: 100%; height: 200px;">
+              <canvas id="tempPanel1Chart"></canvas>
+            </div>
+            <ion-text color="primary">Panel 1</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div style="width: 100%; height: 200px;">
+              <canvas id="tempPanel2Chart"></canvas>
+            </div>
+            <ion-text color="primary">Panel 2</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div style="width: 100%; height: 200px;">
+              <canvas id="tempNodoChart"></canvas>
+            </div>
+            <ion-text color="primary">Nodo</ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Estados del sistema -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Estados del Sistema</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <!-- Representación de cada estado -->
+          <ion-col size="12" *ngFor="let estado of estadosBooleanos">
+            <ion-card class="estado-card" [ngClass]="{ 'estado-activo': estado.valor, 'estado-inactivo': !estado.valor }">
+              <ion-card-content class="estado-card-content">
+                <ion-icon [name]="estado.valor ? 'checkmark-circle' : 'close-circle'" 
+                          [color]="estado.valor ? 'success' : 'danger'" 
+                          class="estado-icon"></ion-icon>
+                <div class="estado-text">
+                  <ion-label class="estado-nombre">{{ estado.nombre }}</ion-label>
+                  <ion-label class="estado-status" [color]="estado.valor ? 'success' : 'danger'">
+                    {{ estado.valor ? 'Activo' : 'Inactivo' }}
+                  </ion-label>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Estado general del inverter -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Estado del Inverter</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="lcd-screen">
+        <span class="lcd-text">{{ estadoGeneral }}</span>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+

@@ -1,0 +1,27 @@
+.historical-data-grid {
+    ion-row.header-row {
+      background: #f4f4f4;
+      font-weight: bold;
+      text-align: center;
+  
+      ion-col {
+        border-bottom: 1px solid #ccc;
+        padding: 10px;
+      }
+    }
+  
+    ion-row.data-row {
+      text-align: center;
+  
+      ion-col {
+        border-bottom: 1px solid #eaeaea;
+        padding: 10px;
+        font-size: 0.9rem;
+      }
+  
+      ion-col:nth-child(even) {
+        background: #f9f9f9;
+      }
+    }
+  }
+  

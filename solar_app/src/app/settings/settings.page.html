@@ -1,0 +1,147 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Configuración</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Registro histórico -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Datos Históricos</ion-card-title>
+        <ion-button (click)="exportToCSV()" color="primary">
+          <ion-icon slot="start" name="download-outline"></ion-icon>
+          Exportar CSV
+        </ion-button>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid class="historical-data-grid">
+        <!-- Cabecera de la tabla -->
+        <ion-row class="header-row">
+          <ion-col><strong>Fecha y Hora</strong></ion-col>
+          <ion-col><strong>Irradiancia (W/m²)</strong></ion-col>
+          <ion-col><strong>Potencia (W)</strong></ion-col>
+          <ion-col><strong>Temp. Panel 1 (°C)</strong></ion-col>
+          <ion-col><strong>Temp. Panel 2 (°C)</strong></ion-col>
+          <ion-col><strong>Temp. Gabinete (°C)</strong></ion-col>
+          <ion-col><strong>RSSI (dBm)</strong></ion-col>
+          <ion-col><strong>Batería (%)</strong></ion-col>
+          <ion-col><strong>Estado Sistema</strong></ion-col>
+          <ion-col><strong>Estado Inverter</strong></ion-col>
+        </ion-row>
+        <!-- Filas de datos -->
+        <ion-row *ngFor="let row of historicalData" class="data-row">
+          <ion-col>{{ row.fechaHora }}</ion-col>
+          <ion-col>{{ row.irradiancia }}</ion-col>
+          <ion-col>{{ row.potencia }}</ion-col>
+          <ion-col>{{ row.tempPanel1 }}</ion-col>
+          <ion-col>{{ row.tempPanel2 }}</ion-col>
+          <ion-col>{{ row.tempGabinete }}</ion-col>
+          <ion-col>{{ row.rssi }}</ion-col>
+          <ion-col>{{ row.bateria }}</ion-col>
+          <ion-col [ngStyle]="{'color': row.estadoSistema === 'OK' ? 'green' : 'red'}">
+            {{ row.estadoSistema }}
+          </ion-col>
+          <ion-col [ngStyle]="{'color': row.estadoInverter === 'On' ? 'blue' : 'orange'}">
+            {{ row.estadoInverter }}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Gestión de usuarios -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Gestión de Usuarios</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <!-- Formulario para agregar usuario -->
+      <ion-card *ngIf="!isEditing">
+        <ion-card-header>
+          <ion-card-title>Agregar Nuevo Usuario</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <form (submit)="addUser()">
+            <ion-item>
+              <ion-label position="floating">Nombre de usuario</ion-label>
+              <ion-input [(ngModel)]="newUser.username" name="username" required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Rol</ion-label>
+              <ion-select [(ngModel)]="newUser.role" name="role" required>
+                <ion-select-option value="admin">Administrador</ion-select-option>
+                <ion-select-option value="usuario">Usuario</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item >
+              <ion-label position="floating">Contraseña</ion-label>
+              <ion-input type="password" [(ngModel)]="newUser.password" name="password" required></ion-input>
+            </ion-item>
+            <ion-button expand="block" type="submit" color="primary" [disabled]="!newUser.username || !newUser.role || !newUser.password">
+              <ion-icon slot="start" name="add-circle"></ion-icon> Agregar Usuario
+            </ion-button>
+          </form>
+        </ion-card-content>
+      </ion-card>
+  
+      <!-- Lista de usuarios -->
+      <ion-card *ngIf="!isEditing">
+        <ion-card-header>
+          <ion-card-title>Usuarios Existentes</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-item *ngFor="let user of users; let i = index">
+              <ion-icon slot="start" name="person-circle" color="primary"></ion-icon>
+              <ion-label>
+                <h2>{{ user.username }}</h2>
+                <p>Rol: {{ user.role }}</p>
+              </ion-label>
+              <ion-button color="secondary" (click)="editUser(user, i)">
+                <ion-icon slot="start" name="create-outline"></ion-icon> Editar
+              </ion-button>
+              <ion-button color="danger" (click)="confirmDeleteUser(i)">
+                <ion-icon slot="start" name="trash-outline"></ion-icon> Eliminar
+              </ion-button>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+  
+      <!-- Interfaz para editar usuario -->
+      <ion-card *ngIf="isEditing">
+        <ion-card-header>
+          <ion-card-title>Editar Usuario</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <form (submit)="saveEditedUser()">
+            <ion-item>
+              <ion-label position="floating">Nombre de usuario</ion-label>
+              <ion-input [(ngModel)]="newUser.username" name="editUsername" required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Rol</ion-label>
+              <ion-select [(ngModel)]="newUser.role" name="editRole" required>
+                <ion-select-option value="admin">Administrador</ion-select-option>
+                <ion-select-option value="usuario">Usuario</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Contraseña</ion-label>
+              <ion-input type="password" [(ngModel)]="newUser.password" name="editPassword" required></ion-input>
+            </ion-item>
+            <ion-button expand="block" color="primary" (click)="confirmSaveChanges()" [disabled]="!newUser.username || !newUser.role">
+              <ion-icon slot="start" name="save-outline"></ion-icon> Guardar Cambios
+            </ion-button>            
+            <ion-button expand="block" color="medium" (click)="cancelEdit()">
+              <ion-icon slot="start" name="arrow-back-outline"></ion-icon> Cancelar
+            </ion-button>
+          </form>
+        </ion-card-content>
+      </ion-card>
+    </ion-card-content>
+  </ion-card>  
+</ion-content>
+
+

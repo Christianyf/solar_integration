@@ -1,0 +1,65 @@
+.estado-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .lcd-screen {
+    background-color: #000;
+    color: #0f0;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .lcd-text {
+    font-size: 20px;
+  }
+  
+  .estado-card {
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    padding: 10px;
+    transition: transform 0.3s;
+  }
+  
+  .estado-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .estado-activo {
+    border-left: 5px solid var(--ion-color-success);
+  }
+  
+  .estado-inactivo {
+    border-left: 5px solid var(--ion-color-danger);
+  }
+  
+  .estado-card-content {
+    display: flex;
+    align-items: center;
+  }
+  
+  .estado-icon {
+    font-size: 2.5rem;
+    margin-right: 15px;
+  }
+  
+  .estado-text {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .estado-nombre {
+    font-weight: bold;
+    font-size: 1.0rem;
+  }
+  
+  .estado-status {
+    font-size: 0.9rem;
+    color: var(--ion-color-medium);
+  }
