@@ -2,9 +2,8 @@ version: '3.8'
 
 services:
   frontend:
-    build:
-      context: ./solar_app
-      dockerfile: Dockerfile
+    image:
+      -  718722861400.dkr.ecr.us-east-1.amazonaws.com/solar-iot:frontend
     ports:
       - "8101:80"
     depends_on:
@@ -13,9 +12,8 @@ services:
       - app-network
 
   backend:
-    build:
-      context: ./solar_server
-      dockerfile: Dockerfile
+    image:
+      - 718722861400.dkr.ecr.us-east-1.amazonaws.com/solar-iot:backend
     ports:
       - "8100:8100"
     environment:
