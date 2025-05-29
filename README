@@ -1,0 +1,4 @@
+Esta carpeta contiene todo el proyecto en su versión final, lista para dockerizar
+y demás, la diferencia con el otro es que este solo tiene o está asociada a un solo
+repo. El otro tiene un repo por el backend, otro por el frontend y otro por toda la carpeta.
+
