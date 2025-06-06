@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class RemoteServicesService {
 
-  private baseUrl = 'http://localhost:8100' //URL de la API
+  private baseUrl = 'http://ec2-3-89-89-12.compute-1.amazonaws.com:8100' //URL de la API http://localhost:8100
 
   constructor(private http: HttpClient) { }
 
